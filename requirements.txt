@@ -1,0 +1,8 @@
+Flask==2.0.1
+Flask-SQLAlchemy
+python-dotenv
+pytest
+gunicorn
+flasgger
+
+
