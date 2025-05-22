@@ -28,16 +28,16 @@ pipeline {
             }
         }
 
+       
         stage('Deploy') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    bat 'echo Deploying the application...'
-                    bat 'ssh user@remote-server "docker pull %DOCKER_USER%/my-python-app:latest"'
-                    bat 'ssh user@remote-server "docker stop my-python-app || true"'
-                    bat 'ssh user@remote-server "docker rm my-python-app || true"'
-                    bat 'ssh user@remote-server "docker run -d -p 5000:5000 --name my-python-app %DOCKER_USER%/my-python-app:latest"'
-                }
-            }
-        }
+    steps {
+        bat 'echo Deploying the application...'
+        bat 'docker pull hamzaerradi03/my-python-app:latest'
+        bat 'docker stop my-python-app || exit 0'
+        bat 'docker rm my-python-app || exit 0'
+        bat 'docker run -d -p 5000:5000 --name my-python-app hamzaerradi03/my-python-app:latest'
+    }
+}
+
     }
 }
