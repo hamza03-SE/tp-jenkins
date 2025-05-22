@@ -14,7 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 bat 'echo Running tests...'
-                // Ajouter vos tests ici si nécessaire
+                // Tu peux ajouter des tests ici (par exemple : pytest, etc.)
             }
         }
 
@@ -28,17 +28,14 @@ pipeline {
             }
         }
 
-       
         stage('Deploy') {
-    steps {
-        bat 'echo Deploying the application...'
-        bat 'docker pull hamzaerradi03/my-python-app:latest'
-        bat 'docker stop my-python-app || exit 0'
-        bat 'docker rm my-python-app || exit 0'
-        bat 'docker run -d -p 5000:5000 --name my-python-app hamzaerradi03/my-python-app:latest'
+            steps {
+                bat 'echo Deploying the application...'
+                bat 'docker pull hamzaerradi03/my-python-app:latest'
+                bat 'docker stop my-python-app || exit 0'
+                bat 'docker rm my-python-app || exit 0'
+                bat 'docker run -d -p 5000:5000 --name my-python-app hamzaerradi03/my-python-app:latest'
+            }
+        }
     }
 }
-
-    }
-}
-
