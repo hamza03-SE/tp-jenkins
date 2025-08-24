@@ -22,13 +22,16 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh 'echo Pushing the Docker image to Docker Hub...'
-                    sh 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
-                    sh 'docker push $DOCKER_USER$/my-python-app:latest'
-                }
-            }
+              withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                 sh '''
+                   echo "Logging in to Docker Hub..."
+                   echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                   docker push $DOCKER_USER/my-python-app:latest
+                   '''
         }
+    }
+}
+
 
         stage('Deploy') {
             steps {
